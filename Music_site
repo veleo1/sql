@@ -1,0 +1,46 @@
+CREATE TABLE IF NOT EXISTS Genres (
+	id SERIAL PRIMARY KEY,
+	name_genre VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Singers (
+	id SERIAL PRIMARY KEY,
+	name_singer VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS SingerGenre (
+	genre_id INTEGER REFERENCES Genres(id),
+	singer_id INTEGER REFERENCES Singers(id),
+	CONSTRAINT pk PRIMARY KEY (genre_id, singer_id)
+);
+
+CREATE TABLE IF NOT EXISTS Albums (
+	id SERIAL PRIMARY KEY,
+	name_album VARCHAR(80) NOT NULL,
+  	year INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS SingerAlbum (
+	album_id INTEGER REFERENCES Albums(id),
+	singer_id INTEGER REFERENCES Singers(id),
+	CONSTRAINT pk PRIMARY KEY (album_id, singer_id)
+);
+
+CREATE TABLE IF NOT EXISTS Tracks (
+	id SERIAL PRIMARY KEY,
+	name_track VARCHAR(80) NOT NULL,
+  	lenght NUMERIC NOT NULL,
+  	album_id INTEGER REFERENCES Albums(id)
+);
+
+CREATE TABLE IF NOT EXISTS Collections (
+	id SERIAL PRIMARY KEY,
+	name_collection VARCHAR(80) NOT NULL,
+  	year INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS CollectionTrack (
+	collection_id INTEGER REFERENCES Collections(id),
+	track_id INTEGER REFERENCES Tracks(id),
+	CONSTRAINT pk PRIMARY KEY (collection_id, track_id)
+);
